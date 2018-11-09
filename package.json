@@ -1,0 +1,43 @@
+{
+  "name": "WordPressDevelopmentThemes",
+  "version": "1.0.0",
+  "author": "Hiroki Omote",
+  "license": "GPL-2.0-or-later",
+  "dependencies": {
+    "babel-eslint": "^8.2.2",
+    "babel-preset-env": "^1.6.1",
+    "browser-sync": "^2.23.6",
+    "cpx": "^1.5.0",
+    "css-mqpacker": "^7.0.0",
+    "csswring": "^7.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-html": "^4.0.2",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^4.7.1",
+    "jquery": "^3.3.1",
+    "laravel-mix": "^2.1.7",
+    "laravel-mix-eslint": "^0.1.1",
+    "laravel-mix-stylelint": "^0.2.0",
+    "stylelint": "^9.6.0",
+    "stylelint-webpack-plugin": "^0.10.5"
+  },
+  "scripts": {
+    "copy": "cpx 'src/**/*.{html,php,png,jpg,gif,svg,woff,eot,ttf,txt,md}' './public'",
+    "copy:watch": "cpx 'src/**/*.{html,php,png,jpg,gif,svg,woff,eot,ttf,txt,md}' './public' --verbose --update --watch",
+    "copy:production": "cpx 'src/**/*.{html,php,png,jpg,gif,svg,woff,eot,ttf,txt,md}' './dist'",
+    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js & npm run copy",
+    "dev:watch": "NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js & npm run copy:watch",
+    "watch": "npm run dev:watch & npm run copy:watch & browser-sync start --config bs-config.js",
+    "production": "NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "build": "npm run production & npm run copy:production",
+    "mysqldump": "docker exec -it container_name sh -c 'mysqldump  wordpress -h db -P 3306 -uwordpress -pwordpress 2> /dev/null' > ./install_wordpress.sql",
+    "clean": "rimraf ./public",
+    "prestart": "docker-compose up -d",
+    "start": "npm run watch"
+  }
+}

@@ -1,0 +1,6 @@
+public/**/*.js
+dist/**/*.js
+bs-config.js
+package.json
+postcss.config.js
+webpack.mix,js

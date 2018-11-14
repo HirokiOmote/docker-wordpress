@@ -3,10 +3,6 @@ FROM wordpress:latest
 COPY ./php/php.ini /usr/local/etc/php/conf.d
 COPY ./pluginlist.txt /tmp/pluginlist.txt
 
-# ローカルファイルのテーマ・プラグインをインストールする場合
-# COPY './themes/*.zip' /usr/src/wordpress/wp-content/themes
-# COPY './plugins/*.zip' /usr/src/wordpress/wp-content/plugins
-
 # 必要なツール郡をインストール
 RUN apt-get update
 RUN apt-get -y install wget unzip
@@ -18,13 +14,17 @@ RUN a2enmod rewrite
 
 # WP プラグイン (zip) ダウンロード
 WORKDIR /tmp/wp-plugins
+# ローカルファイルのプラグインをインストールする場合
+# COPY './plugins/*.zip' ./
 RUN wget -i /tmp/pluginlist.txt
 
 # Zip ファイルを解凍してインストール
-WORKDIR /usr/src/wordpress/wp-content/plugins
-RUN unzip '*.zip'
-# WORKDIR /usr/src/wordpress/wp-content/themes
-# UN unzip '*.zip'
+RUN unzip '*.zip' -d /usr/src/wordpress/wp-content/plugins
+
+WORKDIR /tmp/wp-themes
+# ローカルファイルのテーマをインストールする場合
+# COPY './themes/*.zip' ./
+RUN unzip '*.zip' -d /usr/src/wordpress/wp-content/themes
 
 # 不要になった一時ファイルを削除
 RUN apt-get clean

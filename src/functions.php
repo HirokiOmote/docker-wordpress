@@ -3,12 +3,12 @@
 
 if (!is_admin()) {
 	function register_style() {
-		wp_register_style('style', get_stylesheet_uri() .'/style.css');
+		wp_register_style('style', get_stylesheet_uri());
 	}
 
   function add_stylesheet() {
       register_style();
-      wp_enqueue_style('all');
+      wp_enqueue_style('style');
   }
 
 	function register_script() {

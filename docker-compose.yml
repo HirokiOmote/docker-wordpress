@@ -1,6 +1,5 @@
 version: "3.1"
 services:
-  # コンテナに名前をつける場合はコメントアウトを解除
   # container_name: "name_wordpress"
   wordpress:
     build: ./wordpress
@@ -16,8 +15,7 @@ services:
     volumes:
       - ./public:/var/www/html/wp-content/themes/harim
   mariadb:
-    # コンテナに名前をつける場合はコメントアウトを解除
-    # container_name: "name_wordpress"
+    # container_name: "name_db"
     image: mariadb:latest
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
@@ -26,8 +24,7 @@ services:
       MYSQL_PASSWORD: wordpress
     volumes:
       - db-data:/var/lib/mysql
-      # 初回起動時にSQLデータをimportする場合はコメントを解除
-      # - ./install_wordpress.sql:/docker-entrypoint-initdb.d/install_wordpress.sql
+      # - ./database/install_wordpress.sql:/docker-entrypoint-initdb.d/install_wordpress.sql
 volumes:
   db-data:
     driver: local

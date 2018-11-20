@@ -24,7 +24,7 @@ RUN unzip '*.zip' -d /usr/src/wordpress/wp-content/plugins
 WORKDIR /tmp/wp-themes
 # ローカルファイルのテーマをインストールする場合
 # COPY './themes/*.zip' ./
-RUN unzip '*.zip' -d /usr/src/wordpress/wp-content/themes
+# RUN unzip '*.zip' -d /usr/src/wordpress/wp-content/themes
 
 # 不要になった一時ファイルを削除
 RUN apt-get clean

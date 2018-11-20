@@ -45,10 +45,12 @@ if (mix.inProduction()) {
     cache: false,
     postCss: [
       require('csswring')({
-        removeAllComments: true
+        removeAllComments: false
       })
     ]
   });
 } else {
   mix.webpackConfig({ devtool: 'inline-source-map' });
 }
+
+mix.disableNotifications();

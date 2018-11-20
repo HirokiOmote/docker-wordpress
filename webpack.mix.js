@@ -1,11 +1,11 @@
 const mix = require('laravel-mix');
 const path = require('path');
+const styleLintPlugin = require('stylelint-webpack-plugin');
 
 const autoprefixer = require('autoprefixer');
 const cssMqpacker = require('css-mqpacker');
 
 require('laravel-mix-eslint');
-require('laravel-mix-stylelint');
 
 const sourcesPath = path.resolve('src');
 const outputPath = mix.inProduction() ? 'dist' : 'public';
@@ -21,11 +21,17 @@ mix
   .eslint({
     fix: false,
     cache: false
-  })
-  .stylelint({
-    configFile: path.resolve('.stylelintrc'),
-    files: [`${sourcesPath}/**/*.scss`]
   });
+
+mix.webpackConfig({
+  plugins: [
+    new styleLintPlugin({
+      configFile: path.resolve('.stylelintrc'),
+      files: ['**/*.scss'],
+      syntax: 'scss'
+    })
+  ]
+});
 
 mix.options({
   cache: true,

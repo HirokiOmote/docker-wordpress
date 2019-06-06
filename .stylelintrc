@@ -8,7 +8,8 @@
         "ignores",
         "mixin",
         "content",
-        "include"
+        "include",
+				"custom-media"
       ]
     }],
     "indentation": 2,

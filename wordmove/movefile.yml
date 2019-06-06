@@ -1,0 +1,47 @@
+global:
+  sql_adapter: default
+
+local:
+  vhost: "http://localhost:9000"
+  wordpress_path: "/var/www/html/"
+  database:
+    name: "<%= ENV['WORDPRESS_DB_NAME'] %>"
+    user: "<%= ENV['WORDPRESS_DB_NAME'] %>"
+    password: "<%= ENV['WORDPRESS_DB_PASSWORD'] %>"
+    host: "mariadb"
+
+staging:
+  vhost: "<%= ENV['STAGING_URL'] %>"
+  wordpress_path: "<%= ENV['STAGING_DIR_PATH'] %>"
+
+  database:
+    name: "<%= ENV['STAGING_DB_NAME'] %>"
+    user: "<%= ENV['STAGING_DB_USER'] %>"
+    password: "<%= ENV['STAGING_DB_PASSWORD'] %>"
+    host: "<%= ENV['STAGING_DB_HOST'] %>"
+    port: "<%= ENV['STAGING_DB_PORT'] %>"
+
+  exclude:
+    - '.git/'
+    - '.gitignore'
+    - '.gitmodules'
+    - '.env'
+    - 'node_modules/'
+    - 'bin/'
+    - 'tmp/*'
+    - 'Gemfile*'
+    - 'Movefile'
+    - 'movefile'
+    - 'movefile.yml'
+    - 'movefile.yaml'
+    - 'wp-config.php'
+    - 'wp-content/*.sql.gz'
+    - '*.orig'
+    - "wp-content/uploads/backwpup*/*"
+    - ".htaccess"
+
+  ssh:
+    host: "<%= ENV['STAGING_SSH_HOST'] %>"
+    user: "<%= ENV['STAGING_SSH_USER'] %>"
+    port: "<%= ENV['STAGING_SSH_PORT'] %>"
+    rsync_options: "--verbose"

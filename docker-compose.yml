@@ -1,30 +1,37 @@
 version: "3.1"
 services:
-  # container_name: "name_wordpress"
   wordpress:
+    container_name: "${PROJECT_NAME}_wordpress"
     build: ./wordpress
     ports:
-      - "9000:80"
+      - 9000:80
     depends_on:
       - mariadb
-    environment:
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_HOST: "mariadb:3306"
     volumes:
-      - ./public:/var/www/html/wp-content/themes/harim
-  mariadb:
-    # container_name: "name_db"
-    image: mariadb:latest
+      - ./public:/var/www/html/
     environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      WORDPRESS_DB_HOST: mariadb:3306
+    env_file: .env
+  mariadb:
+    container_name: "${PROJECT_NAME}_db"
+    ports:
+      - 3306:3306
+    image: mariadb:latest
     volumes:
       - db-data:/var/lib/mysql
-      # - ./database/install_wordpress.sql:/docker-entrypoint-initdb.d/install_wordpress.sql
+      # - ./database:/docker-entrypoint-initdb.d/install_wordpress.sql
+    env_file: .env
+  wordmove:
+    container_name: "${PROJECT_NAME}_wordmove"
+    tty: true
+    depends_on:
+      - wordpress
+    image: welaika/wordmove
+    volumes:
+      - ./wordmove:/home/wordmove
+      - ./public:/var/www/html
+      - ~/.ssh:/home/wordmove/.ssh
+    env_file: .env
 volumes:
   db-data:
     driver: local

@@ -1,22 +1,35 @@
 const mix = require('laravel-mix');
+
 const path = require('path');
 const styleLintPlugin = require('stylelint-webpack-plugin');
 
 const autoprefixer = require('autoprefixer');
 const cssMqpacker = require('css-mqpacker');
+const postcssCustomMedia = require('postcss-custom-media');
+const cpx = require('cpx');
 
 require('laravel-mix-eslint');
+require('dotenv').config();
 
 const sourcesPath = path.resolve('src');
-const outputPath = mix.inProduction() ? 'dist' : 'public';
+const outputPath = mix.inProduction() ? 'dist' : `public/wp-content/themes/${process.env.PROJECT_NAME}`;
+const copyFiles = `${sourcesPath}/**/*.{html,php,css,png,jpg,gif,svg,woff,woff2,eot,ttf,txt,md,pdf,webm,mp4,ico}`;
+
+console.log(process.env);
 
 mix.autoload({
   jquery: ['$', 'jQuery']
 });
 
+if (process.env.NODE_ENV === 'watch') {
+  cpx.watch(copyFiles, outputPath);
+} else {
+  cpx.copy(copyFiles, outputPath);
+}
+
 mix
   .setPublicPath(outputPath)
-  .sass(`${sourcesPath}/scss/style.scss`, outputPath)
+  .sass(`${sourcesPath}/scss/all.scss`, `${outputPath}/css`)
   .js(`${sourcesPath}/js/main.js`, `${outputPath}/js`)
   .eslint({
     fix: false,
@@ -39,6 +52,7 @@ mix.options({
   processCssUrls: false,
   postCss: [
     autoprefixer,
+    postcssCustomMedia,
     cssMqpacker({
       sort: true
     })
@@ -56,7 +70,11 @@ if (mix.inProduction()) {
     ]
   });
 } else {
-  mix.webpackConfig({ devtool: 'inline-source-map' });
+  mix
+    .sourceMaps()
+    .webpackConfig({
+      devtool: 'inline-source-map'
+    });
 }
 
 mix.disableNotifications();

@@ -1,3 +1,6 @@
 dist/
 public/
 node_modules/
+.ssh/
+.bash_history
+.env

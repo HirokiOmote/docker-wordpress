@@ -1,3 +1,3 @@
-const aaa = 'Hello World !!';
-
-console.log(aaa);
+export default () => {
+  console.log('Good Bye World');
+};

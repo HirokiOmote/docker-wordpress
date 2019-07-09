@@ -19,7 +19,6 @@ services:
     image: mariadb:latest
     volumes:
       - db-data:/var/lib/mysql
-      # - ./database:/docker-entrypoint-initdb.d/install_wordpress.sql
     env_file: .env
   wordmove:
     container_name: "${PROJECT_NAME}_wordmove"

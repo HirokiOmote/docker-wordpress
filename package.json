@@ -23,7 +23,7 @@
 		"eslint-plugin-vue": "^4.7.1",
 		"fast-glob": "^2.2.6",
 		"fs-extra": "^7.0.1",
-		"jquery": "^3.3.1",
+		"jquery": "^3.5.0",
 		"laravel-mix": "^2.1.7",
 		"laravel-mix-eslint": "^0.1.1",
 		"npm-run-all": "^4.1.3",

@@ -15,8 +15,6 @@ const sourcesPath = path.resolve('src');
 const outputPath = mix.inProduction() ? 'dist' : `public/wp-content/themes/${process.env.PROJECT_NAME}`;
 const copyFiles = `${sourcesPath}/**/*.{html,php,css,png,jpg,gif,svg,woff,woff2,eot,ttf,txt,md,pdf,webm,mp4,ico}`;
 
-console.log(process.env);
-
 mix.autoload({
   jquery: ['$', 'jQuery']
 });

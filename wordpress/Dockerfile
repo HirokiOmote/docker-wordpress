@@ -5,10 +5,9 @@ COPY ./pluginlist.txt /tmp/pluginlist.txt
 
 # 必要なツール郡をインストール
 RUN apt-get update
-RUN apt-get -y install wget unzip
+RUN apt-get -y install wget unzip libzip-dev
 
-RUN apt-get install -y zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/* \
+RUN rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install zip
 RUN a2enmod rewrite
 
